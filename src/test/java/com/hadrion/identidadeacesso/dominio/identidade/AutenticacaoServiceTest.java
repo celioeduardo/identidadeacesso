@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hadrion.identidadeacesso.IdentidadeAcessoApplicationTest;
 
-public class AuthenticationServiceTest extends IdentidadeAcessoApplicationTest {
+public class AutenticacaoServiceTest extends IdentidadeAcessoApplicationTest {
 	
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
