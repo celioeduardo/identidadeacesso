@@ -3,15 +3,19 @@ package com.hadrion.identidadeacesso.dominio.identidade;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hadrion.identidadeacesso.IdentidadeAcessoApplicationTest;
 
 public class HospedeTest extends IdentidadeAcessoApplicationTest{
 	
+	@Autowired
+	private AlocacaoHospedeService alocacaoHospedeService;
+	
 	@Test
 	public void alocarHospede(){
 		
-		Hospede hospede = AlocacaoHospedeService
+		Hospede hospede = alocacaoHospedeService
 			.alocarHospede(
 				FIXTURE_HOSPEDE_NOME,
 				FIXTURE_HOSPEDE_DESCRICAO,

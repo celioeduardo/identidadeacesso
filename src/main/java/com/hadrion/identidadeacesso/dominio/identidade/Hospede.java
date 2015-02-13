@@ -182,4 +182,13 @@ public class Hospede extends Afirmacao{
         return Collections.unmodifiableSet(todosConvites);
     }
 	
+	public void retirarConvite(String identificadorConvite) {
+        ConviteRegistro convite =
+            this.convite(identificadorConvite);
+
+        if (convite != null) {
+            this.getConvitesRegistro().remove(convite);
+        }
+    }
+	
 }

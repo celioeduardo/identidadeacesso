@@ -15,6 +15,10 @@ import com.hadrion.identidadeacesso.comum.Afirmacao;
 @Access(AccessType.FIELD)
 public class Ativacao extends Afirmacao{
 	
+	public static Ativacao ativacaoIndeterminada(){
+		return new Ativacao(true,null,null);
+	}
+	
 	@Column(name="HABILITADA")
 	private boolean habilidata;
 	
