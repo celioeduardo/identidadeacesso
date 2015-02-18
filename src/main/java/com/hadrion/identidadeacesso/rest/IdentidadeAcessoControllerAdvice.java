@@ -1,4 +1,4 @@
-package com.hadrion.identidadeacesso.recurso;
+package com.hadrion.identidadeacesso.rest;
 
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;

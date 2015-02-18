@@ -1,13 +1,15 @@
-package com.hadrion.identidadeacesso.recurso;
+package com.hadrion.identidadeacesso.rest;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,38 +23,48 @@ import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 
 
 @RestController
-@RequestMapping("/hospedes")
+@RequestMapping(
+	value="/hospedes",
+	produces={IdentidadeAcessoMediaType.ID_HADRION_TYPE,MediaType.APPLICATION_JSON_VALUE})
 @ExposesResourceFor(HospedeData.class)
 public class HospedeRestController {
-
+	
+	@Autowired EntityLinks links;
+	
 	@Autowired
 	private IdentidadeAcessoAplicacaoService servico;
 	
 	@Autowired
 	private HospedeResourceAssembler hospedeResourceAssembler;
 	
-	@RequestMapping(value="/{hospedeId}",
-			method=RequestMethod.GET, 
-			produces=IdentidadeAcessoMediaType.ID_HADRION_TYPE)
-	public HospedeRecurso obter(@PathVariable String hospedeId){
-		HospedeData hospede = servico.hospede(hospedeId);
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public HospedeRecurso obter(@PathVariable String id){
+		HospedeData hospede = servico.hospede(id);
 		
 		if (hospede == null)
-			throw new RecursoNaoEncontadoException("Hospede ["+hospedeId+"] não encontrado.");
+			throw new RecursoNaoEncontadoException("Hospede ["+id+"] não encontrado.");
 		
 		HospedeRecurso recurso = hospedeResourceAssembler.toResource(hospede);
 		return recurso;
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, 
-			produces=IdentidadeAcessoMediaType.ID_HADRION_TYPE)
-	public List<HospedeRecurso> hospedes(){
-		return hospedeResourceAssembler.toResources(servico.hospedes());
+	@RequestMapping(method=RequestMethod.GET)
+	public Resources<HospedeRecurso> hospedes(){
+		
+//		List<HospedeRecurso> hospedes = servico.hospedes()
+//				.stream()
+//				.map(HospedeRecurso::new)
+//				.collect(Collectors.toList());
+//		
+//		return new Resources<HospedeRecurso>(hospedes);
+		Resources<HospedeRecurso> resources =  
+				new Resources<HospedeRecurso>(hospedeResourceAssembler.toResources(servico.hospedes()));
+		resources.add(links.linkToCollectionResource(HospedeData.class));
+		return resources;
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, 
-			produces=IdentidadeAcessoMediaType.ID_HADRION_TYPE)
+	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> alocar(
 			@RequestBody AlocarHospedeComando comando){
 		
@@ -65,7 +77,5 @@ public class HospedeRestController {
 		return new ResponseEntity<>(httpHeaders,HttpStatus.CREATED);
 		
 	}
-	
-	
 	
 }

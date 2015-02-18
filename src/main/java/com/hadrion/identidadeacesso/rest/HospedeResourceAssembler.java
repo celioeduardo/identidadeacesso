@@ -1,4 +1,4 @@
-package com.hadrion.identidadeacesso.recurso;
+package com.hadrion.identidadeacesso.rest;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -23,11 +23,7 @@ public class HospedeResourceAssembler extends ResourceAssemblerSupport<HospedeDa
 	
 	@Override
     protected HospedeRecurso instantiateResource(HospedeData hospede) {
-        return new HospedeRecurso(
-        		hospede.getHospedeId(),
-        		hospede.getNome(),
-        		hospede.getDescricao(),
-        		hospede.isAtivo());
+        return new HospedeRecurso(hospede);
     }
 
 }

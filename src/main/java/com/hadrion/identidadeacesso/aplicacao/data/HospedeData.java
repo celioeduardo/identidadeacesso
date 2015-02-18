@@ -1,5 +1,6 @@
 package com.hadrion.identidadeacesso.aplicacao.data;
 
+
 public class HospedeData {
 	private String hospedeId;
 	private String nome;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hadrion.identidadeacesso.dominio.identidade.Ativacao;
@@ -16,6 +17,7 @@ import com.hadrion.identidadeacesso.dominio.identidade.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={IdentidadeAcessoApplication.class}, loader = SpringApplicationContextLoader.class)
+@WebAppConfiguration
 @Transactional
 public abstract class IdentidadeAcessoApplicationTest extends IdentidadeAcessoTest{
     private Hospede hospede;

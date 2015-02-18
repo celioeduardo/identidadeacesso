@@ -1,4 +1,4 @@
-package com.hadrion.identidadeacesso.recurso;
+package com.hadrion.identidadeacesso.rest;
 
 
 public class RecursoNaoEncontadoException extends RuntimeException{
