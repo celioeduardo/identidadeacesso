@@ -25,7 +25,7 @@ import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 @RestController
 @RequestMapping(
 	value="/hospedes",
-	produces={IdentidadeAcessoMediaType.ID_HADRION_TYPE,MediaType.APPLICATION_JSON_VALUE})
+	produces={MediaType.APPLICATION_JSON_VALUE,IdentidadeAcessoMediaType.ID_HADRION_TYPE})
 @ExposesResourceFor(HospedeData.class)
 public class HospedeRestController {
 	

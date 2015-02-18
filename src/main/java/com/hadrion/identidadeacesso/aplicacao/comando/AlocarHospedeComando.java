@@ -8,6 +8,17 @@ public class AlocarHospedeComando {
 	private String nomeAdministrador;
 	private String emailAdministrador;
 	
+	public AlocarHospedeComando() {
+		super();
+	}
+	public AlocarHospedeComando(String nome, String descricao,
+			String nomeAdministrador, String emailAdministrador) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.nomeAdministrador = nomeAdministrador;
+		this.emailAdministrador = emailAdministrador;
+	}
 	public String getNome() {
 		return nome;
 	}
