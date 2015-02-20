@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hadrion.identidadeacesso.dominio.acesso.papel.Papel;
 import com.hadrion.identidadeacesso.dominio.identidade.Ativacao;
 import com.hadrion.identidadeacesso.dominio.identidade.ConviteRegistro;
 import com.hadrion.identidadeacesso.dominio.identidade.Hospede;
@@ -77,5 +78,9 @@ public abstract class IdentidadeAcessoApplicationTest extends IdentidadeAcessoTe
 						this.pessoaEntidade(hospede));
 		
 		return usuario;
+	}
+	protected Papel papelFixture(){
+		return this.hospedeFixture()
+				.proverPapel(FIXTURE_PAPEL, "Um papel de teste.",true);
 	}
 }

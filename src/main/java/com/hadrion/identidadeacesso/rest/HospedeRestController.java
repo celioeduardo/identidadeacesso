@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hadrion.identidadeacesso.aplicacao.IdentidadeAcessoAplicacaoService;
+import com.hadrion.identidadeacesso.aplicacao.IdentidadeAplicacaoService;
 import com.hadrion.identidadeacesso.aplicacao.comando.AlocarHospedeComando;
 import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 
@@ -32,7 +32,7 @@ public class HospedeRestController {
 	@Autowired EntityLinks links;
 	
 	@Autowired
-	private IdentidadeAcessoAplicacaoService servico;
+	private IdentidadeAplicacaoService servico;
 	
 	@Autowired
 	private HospedeResourceAssembler hospedeResourceAssembler;
@@ -60,7 +60,7 @@ public class HospedeRestController {
 //		return new Resources<HospedeRecurso>(hospedes);
 		Resources<HospedeRecurso> resources =  
 				new Resources<HospedeRecurso>(hospedeResourceAssembler.toResources(servico.hospedes()));
-		resources.add(links.linkToCollectionResource(HospedeData.class));
+		//resources.add(links.linkToCollectionResource(HospedeData.class));
 		return resources;
 	}
 	

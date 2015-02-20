@@ -13,16 +13,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hadrion.identidadeacesso.aplicacao.IdentidadeAcessoAplicacaoService;
+import com.hadrion.identidadeacesso.aplicacao.IdentidadeAplicacaoService;
+import com.hadrion.identidadeacesso.dominio.acesso.papel.Papel;
+import com.hadrion.identidadeacesso.dominio.acesso.papel.PapelRepositorio;
 import com.hadrion.identidadeacesso.dominio.identidade.Usuario;
 import com.hadrion.identidadeacesso.dominio.identidade.UsuarioRepositorio;
+
 public class UsuarioRestControllerTest extends AbstractRestControllerTest {
 	
 	@Autowired
-	private IdentidadeAcessoAplicacaoService servico;
+	private IdentidadeAplicacaoService servico;
 	
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired
+	private PapelRepositorio papelRepositorio;
 	
 	@Before
 	public void setup() {
@@ -100,7 +106,47 @@ public class UsuarioRestControllerTest extends AbstractRestControllerTest {
 				"não tenho idéia");
 		
 		mockMvc.perform(get(url))
-		.andExpect(status().is4xxClientError())
+			.andExpect(status().is4xxClientError())
+			.andExpect(content().contentType(contentType));
+	}
+	
+	@Test
+	public void usuarioNoPapel() throws Exception {
+		Usuario usuario = this.usuarioFixture();
+		usuarioRepositorio.salvar(usuario);
+		
+		Papel papel = this.papelFixture();
+		papel.associarUsuario(usuario);
+		papelRepositorio.adicionar(papel);
+		
+		String url = format("/hospedes/%s/usuarios/%s/noPapel/%s",
+				usuario.hospedeId(),
+				usuario.username(),
+				papel.nome());
+			
+        mockMvc.perform(get(url))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(contentType))
+            .andExpect(jsonPath("$.username", is(usuario.username())))
+            .andExpect(jsonPath("$.papel", is(papel.nome())));
+    }
+	
+	@Test
+	public void usuarioNaoEstaNoPapel() throws Exception {
+		Usuario usuario = this.usuarioFixture();
+		usuarioRepositorio.salvar(usuario);
+		
+		Papel papel = this.papelFixture();
+		papelRepositorio.adicionar(papel);
+		
+		String url = format("/hospedes/%s/usuarios/%s/noPapel/%s",
+				usuario.hospedeId(),
+				usuario.username(),
+				papel.nome());
+		
+		mockMvc.perform(get(url))
+		.andExpect(status().is2xxSuccessful())
 		.andExpect(content().contentType(contentType));
 	}
+	
 }

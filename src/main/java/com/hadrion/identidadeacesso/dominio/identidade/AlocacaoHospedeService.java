@@ -26,7 +26,7 @@ public class AlocacaoHospedeService {
 			String descricao, String nomeAdministrador, Email emailAdministrador) {
 		
 		Hospede hospede = new Hospede(
-				new HospedeId(UUID.randomUUID().toString().toLowerCase()),
+				new HospedeId(UUID.randomUUID().toString().toUpperCase()),
 				nome,descricao,true);
 		
 		hospedeRepositorio.salvar(hospede);

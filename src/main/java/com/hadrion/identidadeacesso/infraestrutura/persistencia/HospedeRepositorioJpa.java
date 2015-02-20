@@ -21,7 +21,7 @@ class HospedeRepositorioJpa implements HospedeRepositorio {
 	@Transactional(readOnly=true)
 	@Override
 	public HospedeId proximaIdentidade() {
-		return new HospedeId(UUID.randomUUID().toString().toLowerCase());
+		return new HospedeId(UUID.randomUUID().toString().toUpperCase());
 	}
 
 	@Override

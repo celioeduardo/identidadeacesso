@@ -20,7 +20,7 @@ import com.hadrion.identidadeacesso.dominio.identidade.HospedeRepositorio;
 
 @Service
 @Transactional
-public class IdentidadeAcessoAplicacaoService {
+public class IdentidadeAplicacaoService {
 	
 	@Autowired
 	private HospedeRepositorio hospedeRepositorio;

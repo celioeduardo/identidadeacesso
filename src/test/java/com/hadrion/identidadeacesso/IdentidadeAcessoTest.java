@@ -18,6 +18,7 @@ public abstract class IdentidadeAcessoTest {
 	protected static final String FIXTURE_HOSPEDE_NOME = "Hóspede Teste";
 	protected static final String FIXTURE_USUARIO_EMAIL_ENDERECO = "teste@hadrion.com.br";
 	protected static final String FIXTURE_USERNAME = "testehdr";
+	protected static final String FIXTURE_PAPEL = "Papel teste";
 	protected static final long VINTE_E_QUATRO_HORAS = (1000L * 60L * 60L * 24L);
 
 	protected static final String FIXTURE_USERNAME2 = "testehdr2";

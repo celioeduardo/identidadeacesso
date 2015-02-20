@@ -41,7 +41,7 @@ public final class SenhaService extends Afirmacao {
                 break;
             case 1:
                 index = random.nextInt(LETRAS.length());
-                senha.append(LETRAS.substring(index, index+1).toLowerCase());
+                senha.append(LETRAS.substring(index, index+1).toUpperCase());
                 break;
             case 2:
                 index = random.nextInt(DIGITOS.length());

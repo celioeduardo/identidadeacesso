@@ -14,13 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.hadrion.identidadeacesso.aplicacao.IdentidadeAcessoAplicacaoService;
+import com.hadrion.identidadeacesso.aplicacao.IdentidadeAplicacaoService;
 import com.hadrion.identidadeacesso.aplicacao.comando.AlocarHospedeComando;
 import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 
 public class HospedeRestControllerTest extends AbstractRestControllerTest {
 	@Autowired
-	private IdentidadeAcessoAplicacaoService servico;
+	private IdentidadeAplicacaoService servico;
 
 	private List<HospedeData> hospedeList = new ArrayList<HospedeData>();
 

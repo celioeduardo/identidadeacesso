@@ -1,5 +1,7 @@
 package com.hadrion.identidadeacesso.rest;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -9,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hadrion.identidadeacesso.aplicacao.IdentidadeAcessoAplicacaoService;
+import com.hadrion.identidadeacesso.aplicacao.AcessoAplicacaoService;
+import com.hadrion.identidadeacesso.aplicacao.IdentidadeAplicacaoService;
 import com.hadrion.identidadeacesso.aplicacao.data.DescritorUsuarioData;
 import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 
@@ -24,7 +27,10 @@ public class UsuarioRestController {
 	@Autowired EntityLinks links;
 	
 	@Autowired
-	private IdentidadeAcessoAplicacaoService servico;
+	private IdentidadeAplicacaoService servico;
+	
+	@Autowired
+	private AcessoAplicacaoService acessoAplicacaoService;
 	
 	@Autowired
 	private UsuarioResourceAssembler usuarioResourceAssembler;
@@ -40,10 +46,27 @@ public class UsuarioRestController {
 		if (usuario == null)
 			throw new RecursoNaoEncontadoException("não encontrado.");
 		
-		//return new UsuarioRecurso(usuario);
-		
 		return usuarioResourceAssembler.toResource(usuario);
 		
+	}
+	
+	@RequestMapping(value="{username}/noPapel/{papel}",method=RequestMethod.GET)
+	public UsuarioPapelRecurso usuarioNoPapel(
+			@PathVariable String hospedeId,
+			@PathVariable String username,
+			@PathVariable String papel,
+			HttpServletResponse response){
+		
+		boolean estaNoPapel = acessoAplicacaoService.usuarioEstaNoPapel(
+				hospedeId,username,papel);
+		
+		if (estaNoPapel)
+			return new UsuarioPapelRecurso(username, papel);
+		else {
+			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			return null;
+		}
 	}
 	
 //	@RequestMapping(method=RequestMethod.GET)
