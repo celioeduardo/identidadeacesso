@@ -62,8 +62,8 @@ public class DescritorUsuario {
 	@Override
 	public String toString() {
 		return "DescritorUsuario [hospedeId=" + hospedeId()
-				+ "username=" + username()
-				+ "email=" + email()
+				+ ", username=" + username()
+				+ ", email=" + email()
 				+ "]";
 	}
 

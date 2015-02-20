@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.hadrion.identidadeacesso.dominio.identidade.grupo.MembroGrupoService;
+
 @Component
 public class DominioRegistro implements ApplicationContextAware {
 
@@ -26,6 +28,11 @@ public class DominioRegistro implements ApplicationContextAware {
 	public static SenhaService senhaService(){
 		return (SenhaService) 
 				applicationContext.getBean(SenhaService.class);
+	}
+	
+	public static MembroGrupoService membroGrupoService(){
+		return (MembroGrupoService) 
+				applicationContext.getBean(MembroGrupoService.class);
 	}
 
 	//private static EventoDominioPublicador eventoDominioPublicador;

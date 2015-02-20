@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hadrion.identidadeacesso.dominio.acesso.papel.Papel;
+import com.hadrion.identidadeacesso.dominio.acesso.papel.PapelRepositorio;
+
 @Service
 @Transactional
 public class AlocacaoHospedeService {
@@ -15,6 +18,9 @@ public class AlocacaoHospedeService {
 	
 	@Autowired
 	private SenhaService senhaService;
+	
+	@Autowired
+	private PapelRepositorio papelRepositorio;
 	
 	public Hospede alocarHospede(String nome,
 			String descricao, String nomeAdministrador, Email emailAdministrador) {
@@ -61,16 +67,14 @@ public class AlocacaoHospedeService {
         
         hospedeRepositorio.salvar(hospede);
         
+        Papel papelAdmin = 
+        	hospede.proverPapel(
+        		"Administrador", 
+        		"Administrador " + hospede.nome() + " padrão.");
         
-//  TODO Role de administrador       
-//        Role adminRole =
-//            hospede.provisionRole(
-//                    "Administrator",
-//                    "Default " + hospede.name() + " administrator.");
-//
-//        adminRole.assignUser(admin);
-//
-//        this.roleRepository().add(adminRole);
+        papelAdmin.associarUsuario(admin);
+        
+        papelRepositorio.adicionar(papelAdmin);
         
 //	TODO Enviar evento TenantAdministratorRegistered
 //        DomainEventPublisher.instance().publish(

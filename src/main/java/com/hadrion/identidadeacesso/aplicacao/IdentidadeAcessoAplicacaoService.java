@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hadrion.identidadeacesso.aplicacao.comando.AlocarHospedeComando;
+import com.hadrion.identidadeacesso.aplicacao.data.DescritorUsuarioData;
 import com.hadrion.identidadeacesso.aplicacao.data.HospedeData;
 import com.hadrion.identidadeacesso.dominio.identidade.AlocacaoHospedeService;
+import com.hadrion.identidadeacesso.dominio.identidade.AutenticacaoService;
+import com.hadrion.identidadeacesso.dominio.identidade.DescritorUsuario;
 import com.hadrion.identidadeacesso.dominio.identidade.Email;
 import com.hadrion.identidadeacesso.dominio.identidade.Hospede;
 import com.hadrion.identidadeacesso.dominio.identidade.HospedeId;
@@ -24,6 +27,9 @@ public class IdentidadeAcessoAplicacaoService {
 	
 	@Autowired
 	private AlocacaoHospedeService alocacaoHospedeService;
+	
+	@Autowired
+	private AutenticacaoService autenticacaoService;
 	
 	@Transactional(readOnly=true)
 	public HospedeData hospede(String hospedeId) {
@@ -59,6 +65,19 @@ public class IdentidadeAcessoAplicacaoService {
 			result.add(construir(hospede));
 		
 		return result;
+	}
+
+	public DescritorUsuarioData autenticarUsuario(String hospedeId,
+			String username, String senha) {
+		
+		DescritorUsuario usuario = autenticacaoService.autenticar(
+				new HospedeId(hospedeId), username, senha);
+		
+		return usuario.ehDescritorNulo() ? null : 
+			new DescritorUsuarioData(
+					usuario.hospedeId().id(), 
+					usuario.username(), 
+					usuario.email());
 	}
 	
 }

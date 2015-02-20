@@ -26,4 +26,9 @@ public class UsuarioRepositorioJpa implements UsuarioRepositorio{
 		return repositorio.findByHospedeIdAndUsernameAndSenha(hospedeId,username,senhaEncriptada);
 	}
 
+	@Override
+	public Usuario usuarioComUsername(HospedeId hospedeId, String username) {
+		return repositorio.findByHospedeIdAndUsername(hospedeId,username);
+	}
+
 }

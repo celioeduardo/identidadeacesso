@@ -44,7 +44,8 @@ public abstract class IdentidadeAcessoApplicationTest extends IdentidadeAcessoTe
         return this.hospede;
     }
 	
-	protected Usuario usuarioFixture(){
+	protected Usuario usuarioFixture(String username, 
+			String senha){
         Hospede hospede = this.hospedeFixture();
 
         ConviteRegistro convite =
@@ -53,11 +54,28 @@ public abstract class IdentidadeAcessoApplicationTest extends IdentidadeAcessoTe
         Usuario usuario =
             hospede.registrarUsuario(
                     convite.conviteId(),
-                    FIXTURE_USERNAME,
-                    FIXTURE_SENHA,
+                    username,
+                    senha,
                     new Ativacao(true, null, null),
                     this.pessoaEntidade(hospede));
 
         return usuario;
     }
+	
+	protected Usuario usuarioFixture(){
+		Hospede hospede = this.hospedeFixture();
+		
+		ConviteRegistro convite =
+				this.conviteRegistro(hospede);
+		
+		Usuario usuario =
+				hospede.registrarUsuario(
+						convite.conviteId(),
+						FIXTURE_USERNAME,
+						FIXTURE_SENHA,
+						new Ativacao(true, null, null),
+						this.pessoaEntidade(hospede));
+		
+		return usuario;
+	}
 }

@@ -20,6 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.hadrion.identidadeacesso.comum.Afirmacao;
+import com.hadrion.identidadeacesso.dominio.acesso.papel.Papel;
+import com.hadrion.identidadeacesso.dominio.identidade.grupo.Grupo;
 
 @Entity
 @SequenceGenerator(name="SEQ", sequenceName="SQ_HOSPEDE")
@@ -183,6 +185,8 @@ public class Hospede extends Afirmacao{
     }
 	
 	public void retirarConvite(String identificadorConvite) {
+		this.assertEstadoVerdadeiro(this.estaAtivo(), "Hóspede não está ativo.");
+		
         ConviteRegistro convite =
             this.convite(identificadorConvite);
 
@@ -190,5 +194,19 @@ public class Hospede extends Afirmacao{
             this.getConvitesRegistro().remove(convite);
         }
     }
+
+	public Papel proverPapel(String nome, String descricao) {
+		return proverPapel(nome, descricao, false);
+	}
+	
+	public Papel proverPapel(String nome, String descricao, boolean suportaAninhamento) {
+		this.assertEstadoVerdadeiro(this.estaAtivo(), "Hóspede não está ativo.");
+		return new Papel(hospedeId(), nome, descricao, suportaAninhamento);
+	}
+
+	public Grupo proverGrupo(String nome, String descricao) {
+		this.assertEstadoVerdadeiro(this.estaAtivo(), "Hóspede não está ativo.");
+		return new Grupo(hospedeId(), nome, descricao);
+	}
 	
 }

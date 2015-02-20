@@ -7,4 +7,6 @@ public interface UsuarioRepositorio {
 	Usuario usuarioPelasCrendenciaisAutenticacao(HospedeId hospedeId,
 			String username, String senhaEncriptada);
 
+	Usuario usuarioComUsername(HospedeId hospedeId, String username);
+
 }

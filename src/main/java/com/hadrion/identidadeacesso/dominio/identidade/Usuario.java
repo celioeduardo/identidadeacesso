@@ -15,6 +15,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.hadrion.identidadeacesso.comum.Afirmacao;
+import com.hadrion.identidadeacesso.dominio.identidade.grupo.MembroGrupo;
+import com.hadrion.identidadeacesso.dominio.identidade.grupo.TipoMembro;
 
 @Entity
 @SequenceGenerator(name="SEQ", sequenceName="SQ_USUARIO")
@@ -116,9 +118,9 @@ public class Usuario extends Afirmacao{
 	@Override
 	public String toString() {
 		return "Usuario [hospedeId=" + hospedeId()
-				+ "username=" + username()
-				+ "ativacao=" + ativacao()
-				+ "pessoa=" + pessoa()
+				+ ",username=" + username()
+				+ ",ativacao=" + ativacao()
+				+ ",pessoa=" + pessoa()
 				+ "]";
 	}
 
@@ -194,6 +196,10 @@ public class Usuario extends Afirmacao{
 	public void alterarNomePessoal(String novoNome) {
 		this.pessoa().alterarNome(novoNome);
 		
+	}
+
+	public MembroGrupo paraMembroGrupo() {
+		return new MembroGrupo(hospedeId(), username(), TipoMembro.Usuario);
 	}
 
 }

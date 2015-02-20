@@ -10,4 +10,6 @@ public interface UsuarioRepositorioSpringData extends JpaRepository<Usuario, Lon
 	Usuario findByHospedeIdAndUsernameAndSenha(HospedeId hospedeId,
 			String username, String senhaEncriptada);
 
+	Usuario findByHospedeIdAndUsername(HospedeId hospedeId, String username);
+
 }
