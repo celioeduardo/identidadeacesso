@@ -17,6 +17,8 @@ import com.hadrion.identidadeacesso.dominio.identidade.Email;
 import com.hadrion.identidadeacesso.dominio.identidade.Hospede;
 import com.hadrion.identidadeacesso.dominio.identidade.HospedeId;
 import com.hadrion.identidadeacesso.dominio.identidade.HospedeRepositorio;
+import com.hadrion.identidadeacesso.dominio.identidade.Usuario;
+import com.hadrion.identidadeacesso.dominio.identidade.UsuarioRepositorio;
 
 @Service
 @Transactional
@@ -30,6 +32,9 @@ public class IdentidadeAplicacaoService {
 	
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+	
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
 	
 	@Transactional(readOnly=true)
 	public HospedeData hospede(String hospedeId) {
@@ -77,7 +82,21 @@ public class IdentidadeAplicacaoService {
 			new DescritorUsuarioData(
 					usuario.hospedeId().id(), 
 					usuario.username(), 
-					usuario.email());
+					usuario.email(),
+					true);
+	}
+	public DescritorUsuarioData obterUsuario(String hospedeId,
+			String username) {
+		
+		Usuario usuario = usuarioRepositorio
+				.usuarioComUsername(new HospedeId(hospedeId), username);
+		
+		return usuario == null ? null : 
+			new DescritorUsuarioData(
+					usuario.hospedeId().id(), 
+					usuario.username(), 
+					usuario.pessoa().email().endereco(),
+					usuario.estaHabilitado());
 	}
 	
 }

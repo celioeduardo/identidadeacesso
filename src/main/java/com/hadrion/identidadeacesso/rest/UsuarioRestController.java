@@ -50,6 +50,20 @@ public class UsuarioRestController {
 		
 	}
 	
+	@RequestMapping(value="{username}",method=RequestMethod.GET)
+	public UsuarioRecurso obter(
+			@PathVariable String hospedeId,
+			@PathVariable String username){
+		
+		DescritorUsuarioData usuario = servico.obterUsuario(hospedeId,username);
+		
+		if (usuario == null)
+			throw new RecursoNaoEncontadoException("não encontrado.");
+		
+		return usuarioResourceAssembler.toResource(usuario);
+		
+	}
+	
 	@RequestMapping(value="{username}/noPapel/{papel}",method=RequestMethod.GET)
 	public UsuarioPapelRecurso usuarioNoPapel(
 			@PathVariable String hospedeId,

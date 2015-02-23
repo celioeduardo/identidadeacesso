@@ -5,12 +5,19 @@ public class DescritorUsuarioData {
 	private String hospedeId;
 	private String username;
 	private String email;
+	private boolean habilitado;
 	
-	public DescritorUsuarioData(String hospedeId, String username, String email) {
+	public DescritorUsuarioData(String hospedeId, String username, 
+			String email, boolean habilitado) {
 		super();
 		this.hospedeId = hospedeId;
 		this.username = username;
 		this.email = email;
+		this.habilitado = habilitado;
+	}
+
+	public boolean isHabilitado() {
+		return habilitado;
 	}
 
 	public String getHospedeId() {

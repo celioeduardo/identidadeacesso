@@ -36,6 +36,27 @@ public class UsuarioRestControllerTest extends AbstractRestControllerTest {
 	}
 	
 	@Test
+    public void obterUsuario() throws Exception {
+		String senha = FIXTURE_SENHA;
+		
+		Usuario usuario = this.usuarioFixture(FIXTURE_USERNAME, senha);
+		
+		usuarioRepositorio.salvar(usuario);
+		
+		String url = format("/hospedes/%s/usuarios/%s",
+				usuario.hospedeId(),
+				usuario.username());
+			
+        mockMvc.perform(get(url))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(contentType))
+            .andExpect(jsonPath("$.usuario.hospedeId", is(usuario.hospedeId().id())))
+            .andExpect(jsonPath("$.usuario.username", is(usuario.username())))
+            .andExpect(jsonPath("$.usuario.email", is(usuario.pessoa().email().endereco())))
+            .andExpect(jsonPath("$.usuario.habilitado", is(true)));
+    }
+	
+	@Test
     public void autenticacaoOk() throws Exception {
 		String senha = FIXTURE_SENHA;
 		
