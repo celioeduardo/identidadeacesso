@@ -22,6 +22,9 @@ public class AlocacaoHospedeService {
 	@Autowired
 	private PapelRepositorio papelRepositorio;
 	
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
+	
 	public Hospede alocarHospede(String nome,
 			String descricao, String nomeAdministrador, Email emailAdministrador) {
 		
@@ -62,6 +65,8 @@ public class AlocacaoHospedeService {
         				hospede.hospedeId(), 
         				nomeAdministrador, 
         				new InformacaoContato(email)));
+        
+        usuarioRepositorio.salvar(admin);
         
         hospede.retirarConvite(convite.conviteId());
         

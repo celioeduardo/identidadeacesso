@@ -75,7 +75,7 @@ public class UsuarioRestController {
 				hospedeId,username,papel);
 		
 		if (estaNoPapel)
-			return new UsuarioPapelRecurso(username, papel);
+			return new UsuarioPapelRecurso(hospedeId,username, papel);
 		else {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
