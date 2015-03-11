@@ -25,8 +25,8 @@ sourceCompatibility = 1.8
 description = "Identidade e Acesso"
 
 repositories { 
-	maven { url "http://repo.hadrion.com.br:8081/nexus/content/groups/public" }
 	mavenLocal()
+	maven { url "http://repo.hadrion.com.br:8081/nexus/content/groups/public" }
     mavenCentral()
 }
 
