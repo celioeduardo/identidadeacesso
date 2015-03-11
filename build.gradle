@@ -48,10 +48,6 @@ dependencies {
     testCompile("com.jayway.jsonpath:json-path:1.2.0")
 }
 
-bootRepackage {
-	enabled = false
-}
-
 ext.priv = parseConfig(file('private.properties'))
 
 def parseConfig(File config) {
@@ -62,11 +58,23 @@ def parseConfig(File config) {
     }
 }
 
-release {
-	failOnUnversionedFiles = false
+bootRepackage {
+	enabled = false
 }
 
 createReleaseTag.dependsOn uploadArchives
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+          parent { 
+            groupId 'org.springframework.boot'
+            artifactId 'spring-boot-starter-parent'
+            version "${springBootVersion}"
+          }
+        }
+    }
+}
 
 uploadArchives {
 	repositories {
