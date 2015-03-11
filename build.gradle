@@ -22,11 +22,6 @@ apply plugin: 'maven'
 
 sourceCompatibility = 1.8
 
-jar {
-    baseName = 'idhadrion'
-    version = "${version}"
-}
-
 description = "Identidade e Acesso"
 
 repositories { 
