@@ -10,18 +10,26 @@ buildscript {
     }
 }
 
+plugins {
+  id 'net.researchgate.release' version '2.0.2'
+}
+
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot' 
+apply plugin: 'maven' 
+
+sourceCompatibility = 1.8
 
 jar {
-    baseName = 'identidadeacesso'
-    version = '0.0.1-SNAPSHOT'
+    baseName = 'idhadrion'
 }
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+
+description = "Identidade e Acesso"
 
 repositories { 
+	maven { url "http://repo.hadrion.com.br:8081/nexus/content/groups/public" }
 	mavenLocal()
     mavenCentral()
 }
@@ -40,7 +48,47 @@ dependencies {
     testCompile("com.jayway.jsonpath:json-path:1.2.0")
 }
 
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
+bootRepackage {
+	enabled = false
 }
+
+ext.priv = parseConfig(file('private.properties'))
+
+def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
+    }
+}
+
+release {
+	failOnUnversionedFiles = false
+}
+
+createReleaseTag.dependsOn uploadArchives
+
+uploadArchives {
+	repositories {
+	   mavenDeployer {
+			repository(url: priv.host+'/releases') {
+				authentication(
+					userName: priv.user, password: priv.pass
+				)
+			}
+			snapshotRepository(url: priv.host) {
+                authentication(
+					userName: priv.user, password: priv.pass
+				)
+            }
+			pom.project {
+	          parent { 
+	            groupId 'org.springframework.boot'
+	            artifactId 'spring-boot-starter-parent'
+	            version "${springBootVersion}"
+	          }
+	        }
+	   }
+	}
+}
+

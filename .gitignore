@@ -24,6 +24,4 @@ temp
 /out/
 
 .temp/
-/gradlew.bat
-##/gradle/
-##/.gradle/
+private.properties
