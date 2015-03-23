@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.RELEASE'
+        springBootVersion = '1.2.2.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -71,6 +71,10 @@ install {
     }
 }
 
+processResources {
+    expand(project.properties)
+}
+
 uploadArchives {
 	repositories {
 	   mavenDeployer {
@@ -95,3 +99,6 @@ uploadArchives {
 	}
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
