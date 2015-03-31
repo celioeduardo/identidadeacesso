@@ -12,7 +12,9 @@ buildscript {
 
 plugins {
   id 'net.researchgate.release' version '2.0.2'
+  id "org.flywaydb.flyway" version "3.2"
 }
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -36,6 +38,7 @@ dependencies {
     compile("org.springframework.hateoas:spring-hateoas")
     compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
     compile("com.oracle:ojdbc6:11.2.0")
+    compile('org.flywaydb:flyway-core')
     
     compile("commons-lang:commons-lang:2.3")
     testCompile("com.h2database:h2")
